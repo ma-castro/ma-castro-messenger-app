@@ -1,0 +1,14 @@
+{
+  "name": "messenger-app",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/ma-castro/messenger-app",
+  "author": "Michael Anthony C. Castro",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.1"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}

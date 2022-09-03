@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+cd backend && yarn pre-commit && cd ../frontend && yarn pre-commit
