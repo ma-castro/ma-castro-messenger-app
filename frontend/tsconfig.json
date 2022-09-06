@@ -14,7 +14,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "typeRoots": ["./src/globalTypes.d.ts"],
+    "types": ["node"]
   },
   "include": ["src", ".eslintrc.json"]
 }

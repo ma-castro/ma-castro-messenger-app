@@ -16,7 +16,7 @@ const fetchConversationsList = asyncHandler(async (req, res) => {
     }
 
     return sendJSONResponse(res, 200, {
-      data: conversations,
+      conversations,
     });
   } catch (error) {
     logger.error(`@fetchConversationsList: ${error.message}`);
@@ -28,7 +28,7 @@ const createOrGetConversation = asyncHandler(async (req, res) => {
   const {name, members} = req.body;
 
   try {
-    const hasExistingConversation = await Conversation.find({
+    const hasExistingConversation = await Conversation.findOne({
       members: {
         $all: members,
       },
@@ -37,7 +37,7 @@ const createOrGetConversation = asyncHandler(async (req, res) => {
     if (hasExistingConversation) {
       return sendJSONResponse(res, 200, {
         message: 'Conversation has been retrieved.',
-        data: hasExistingConversation,
+        conversation: hasExistingConversation,
       });
     }
 
@@ -50,9 +50,9 @@ const createOrGetConversation = asyncHandler(async (req, res) => {
       admins: [req.user.id],
     });
 
-    const fullConversation = await Conversation.findOne({
-      id: createdConversation.id,
-    }).populate('members', '-password');
+    const fullConversation = await Conversation.findById(
+      createdConversation.id,
+    ).populate('members', '-password');
 
     if (!createdConversation || !fullConversation) {
       throw new Error(
@@ -62,7 +62,7 @@ const createOrGetConversation = asyncHandler(async (req, res) => {
 
     return sendJSONResponse(res, 200, {
       message: 'Conversation has been created.',
-      data: createdConversation,
+      conversation: fullConversation,
     });
   } catch (error) {
     logger.error(`@createOrGetConversation: ${error.message}`);

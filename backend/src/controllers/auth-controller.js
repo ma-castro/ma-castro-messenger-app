@@ -14,7 +14,7 @@ const loginUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     return sendJSONResponse(res, 200, {
       message: 'User has been logged in successfully.',
-      data: {
+      user: {
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -34,7 +34,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const fetchAuthUser = asyncHandler(async (req, res) => {
-  return sendJSONResponse(res, 200, {data: req.user});
+  return sendJSONResponse(res, 200, {user: req.user});
 });
 
 export {loginUser, fetchAuthUser};

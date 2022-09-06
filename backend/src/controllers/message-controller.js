@@ -46,7 +46,7 @@ const sendMessage = asyncHandler(async (req, res) => {
 
     return sendJSONResponse(res, 201, {
       message: 'Message has been sent successfully.',
-      data: fullMessage,
+      messageData: fullMessage,
     });
   } catch (error) {
     await session.abortTransaction();
@@ -74,7 +74,7 @@ const fetchMessagesList = asyncHandler(async (req, res) => {
     }
 
     return sendJSONResponse(res, 200, {
-      data: messages,
+      messages,
     });
   } catch (error) {
     logger.error(`@fetchMessagesList: ${error.message}`);

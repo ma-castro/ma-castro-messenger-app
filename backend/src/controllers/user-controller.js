@@ -24,11 +24,11 @@ const registerUser = asyncHandler(async (req, res) => {
       );
     }
 
-    const fullUser = await User.findOne({id: userCreated.id});
+    const fullUser = await User.findById(userCreated.id);
 
     return sendJSONResponse(res, 201, {
       message: 'User has been registered successfully.',
-      data: fullUser,
+      user: fullUser,
     });
   } catch (error) {
     logger.error(`@registerUser: ${error.message}`);
@@ -45,7 +45,7 @@ const fetchUsersList = asyncHandler(async (req, res) => {
     }
 
     return sendJSONResponse(res, 200, {
-      data: users,
+      users,
     });
   } catch (error) {
     logger.error(`@fetchUsersList: ${error.message}`);
@@ -57,14 +57,14 @@ const fetchUserData = asyncHandler(async (req, res) => {
   const {id} = req.params;
 
   try {
-    const user = await User.findOne({id});
+    const user = await User.findById(id);
 
     if (!user) {
       throw new Error('There is a problem fetching user data.');
     }
 
     return sendJSONResponse(res, 200, {
-      data: user,
+      user,
     });
   } catch (error) {
     logger.error(`@fetchUserData: ${error.message}`);

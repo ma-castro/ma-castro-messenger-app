@@ -1,4 +1,4 @@
-export type AuthUser = {
+export interface User {
   id: string;
   firstName: string;
   lastName: string;
@@ -8,9 +8,4 @@ export type AuthUser = {
   createdAt: Date;
   updatedAt: Date;
   token: string;
-};
-
-export type AuthState = {
-  message: string;
-  data: AuthUser | null;
-};
+}
