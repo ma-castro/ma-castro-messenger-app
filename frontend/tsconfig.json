@@ -16,7 +16,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "typeRoots": ["./src/globalTypes.d.ts"],
-    "types": ["node"]
+    "types": ["node"],
+    "baseUrl": "src"
   },
   "include": ["src", ".eslintrc.json"]
 }

@@ -1,8 +1,8 @@
-export interface ConfigType {
+export interface IConfig {
   baseURL: string;
 }
 
-const config: ConfigType = {
+const config: IConfig = {
   baseURL: process.env.REACT_APP_API_PATH || 'http://localhost:5000/apis',
 };
 

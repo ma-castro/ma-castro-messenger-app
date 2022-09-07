@@ -1,29 +1,26 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { InitialState } from '../../models/auth';
-import type { RootState } from '../store';
+import { IInitialState } from './types';
 
-const initialState: InitialState = {
-  message: '',
-  user: null,
+const initialState: IInitialState = {
+  userInfo: null,
+  token: null,
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    authenticate: (state, action: PayloadAction<InitialState>) => {
-      state.user = action.payload.user;
+    setAuthUser: (state, action: PayloadAction<IInitialState>) => {
+      state.userInfo = action.payload.userInfo;
+      state.token = action.payload.token;
     },
-    fetchCurrentUser: (state, action: PayloadAction<InitialState>) => {
-      state = {
-        ...state,
-        user: action.payload.user,
-      };
+    logout: (state) => {
+      state.userInfo = null;
+      state.token = null;
     },
   },
 });
 
-export const { authenticate, fetchCurrentUser } = authSlice.actions;
-export const authUser = (state: RootState) => state.auth.user;
+export const { setAuthUser } = authSlice.actions;
 export default authSlice.reducer;

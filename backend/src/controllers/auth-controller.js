@@ -13,7 +13,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
     return sendJSONResponse(res, 200, {
-      message: 'User has been logged in successfully.',
+      status: 'success',
       user: {
         id: user.id,
         firstName: user.firstName,
@@ -23,14 +23,17 @@ const loginUser = asyncHandler(async (req, res) => {
         avatar: user.avatar,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
-        token: generateToken(user.id),
       },
+      token: generateToken(user.id),
     });
   }
 
   const error = 'Invalid Email or Password.';
   logger.error(`@login: ${error}`);
-  return sendJSONResponse(res, 401, {error});
+  return sendJSONResponse(res, 401, {
+    status: 'failed',
+    message: error,
+  });
 });
 
 const fetchAuthUser = asyncHandler(async (req, res) => {

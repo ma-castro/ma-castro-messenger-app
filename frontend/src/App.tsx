@@ -1,24 +1,29 @@
+import { useMeQuery } from 'modules/redux/auth/authApi';
 import React, { useEffect, useRef } from 'react';
 import LoadingBar, { LoadingBarRef } from 'react-top-loading-bar';
-import useMe from './modules/hooks/useMe';
+import Guest from './pages/Guest';
+import Main from './pages/Main';
 
 const App: React.FC = () => {
-  const { loading, me } = useMe();
+  const { data, isLoading } = useMeQuery();
   const loaderRef = useRef<LoadingBarRef>(null);
 
   useEffect(() => {
-    if (loading) {
+    if (!isLoading) {
       if (loaderRef.current) {
         loaderRef.current.complete();
       }
     } else {
       loaderRef.current?.continuousStart();
     }
-  }, [loading]);
+  }, [isLoading]);
 
-  if (loading && !me) return <LoadingBar ref={loaderRef} />;
-
-  return <div>App</div>;
+  return (
+    <>
+      <LoadingBar ref={loaderRef} />
+      {data ? <Main /> : <Guest />}
+    </>
+  );
 };
 
 export default App;

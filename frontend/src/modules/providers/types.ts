@@ -1,3 +1,3 @@
-export interface Props {
+export type IProps = {
   children: React.ReactNode;
-}
+};

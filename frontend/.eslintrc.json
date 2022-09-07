@@ -25,6 +25,7 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
+    "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
     "camelcase": "error",
     "spaced-comment": "error",
@@ -39,7 +40,15 @@
     ]
   },
   "settings": {
+    "import/extensions": [".ts", ".tsx"],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".ts", ".tsx"]
+      },
       "typescript": {}
     }
   }
