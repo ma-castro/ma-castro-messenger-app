@@ -1,29 +1,36 @@
-import { FocusEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { FocusEvent, useCallback, useEffect, useState } from 'react';
 
 import { LogicProps, State } from './types';
 
-const useLogic = ({ onBlur, onFocus, placeholder: placeholderProp }: LogicProps) => {
+const useLogic = ({ onBlur, onFocus, placeholder: placeholderProp, ref: inputRef }: LogicProps) => {
   const initialState: State = {
     placeholder: placeholderProp || '',
     showLabel: false,
   };
   const [{ placeholder, showLabel }, setState] = useState(initialState);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
-    if (inputRef?.current?.value) {
-      setState((prevState) => ({
-        ...prevState,
-        showLabel: true,
-      }));
+    if (inputRef && 'current' in inputRef) {
+      if (inputRef?.current?.value) {
+        setState((prevState) => ({
+          ...prevState,
+          showLabel: true,
+        }));
+      }
     }
-  }, []);
+  }, [inputRef]);
 
   const handleOnBlur = useCallback(
     (e: FocusEvent<HTMLInputElement>) => {
       if (onBlur) onBlur(e);
-      const value = !!inputRef?.current?.value;
+
+      let value: boolean;
+
+      if (inputRef && 'current' in inputRef) {
+        if (inputRef?.current?.value) {
+          value = !!inputRef?.current?.value;
+        }
+      }
 
       setState((prevState) => ({
         ...prevState,
@@ -48,7 +55,11 @@ const useLogic = ({ onBlur, onFocus, placeholder: placeholderProp }: LogicProps)
   );
 
   const handleFocus = useCallback(() => {
-    inputRef.current?.focus();
+    if (inputRef && 'current' in inputRef) {
+      if (inputRef?.current?.value) {
+        inputRef.current?.focus();
+      }
+    }
   }, [inputRef]);
 
   return {

@@ -1,8 +1,8 @@
-import * as yup from 'yup';
+import { object, string, TypeOf } from 'zod';
 
-export default yup
-  .object({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-  })
-  .required();
+export const LoginSchema = object({
+  email: string().min(1, 'Email address is required').email(),
+  password: string().min(1, 'Password  is required'),
+}).required();
+
+export type TLoginInput = TypeOf<typeof LoginSchema>;

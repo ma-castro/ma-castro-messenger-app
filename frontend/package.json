@@ -24,7 +24,7 @@
     "styled-reset": "^4.4.2",
     "typescript": "*",
     "web-vitals": "^2.1.0",
-    "yup": "^0.32.11"
+    "zod": "^3.19.0"
   },
   "scripts": {
     "start": "react-scripts start",

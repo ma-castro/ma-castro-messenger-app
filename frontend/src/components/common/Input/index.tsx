@@ -1,39 +1,35 @@
 import { ErrorMessage } from '@hookform/error-message';
-import { FC, memo } from 'react';
+import { FC, forwardRef, memo } from 'react';
 
 import useLogic from './logic';
 import { Container, Input as StyledInput, InputErrorWrapper, InputGroup, Label } from './styles';
 import { InputErrorProps, Props } from './types';
 
-const Input: FC<Props> = ({
-  className,
-  error,
-  placeholder: placeholderProp,
-  onBlur,
-  onFocus,
-  ...props
-}) => {
-  const { handle, inputRef, placeholder, showLabel } = useLogic({
-    onBlur,
-    onFocus,
-    placeholder: placeholderProp,
-  });
+const Input = forwardRef<HTMLInputElement, Props>(
+  ({ className, error, placeholder: placeholderProp, onBlur, onFocus, ...props }, ref) => {
+    const { handle, placeholder, showLabel } = useLogic({
+      onBlur,
+      onFocus,
+      placeholder: placeholderProp,
+      ref,
+    });
 
-  return (
-    <Container className={className} isError={error} onClick={handle.focus}>
-      {showLabel && <Label>{placeholderProp}</Label>}
-      <StyledInput
-        onBlur={handle.onBlur}
-        onFocus={handle.onFocus}
-        placeholder={placeholder}
-        ref={inputRef}
-        {...props}
-      />
-    </Container>
-  );
-};
+    return (
+      <Container className={className} isError={error} onClick={handle.focus}>
+        {showLabel && <Label>{placeholderProp}</Label>}
+        <StyledInput
+          onBlur={handle.onBlur}
+          onFocus={handle.onFocus}
+          placeholder={placeholder}
+          ref={ref}
+          {...props}
+        />
+      </Container>
+    );
+  },
+);
 
-export default memo(Input);
+Input.displayName = 'Input';
 
 const InputError: FC<InputErrorProps> = (props) => (
   <InputErrorWrapper>
@@ -44,3 +40,5 @@ const InputError: FC<InputErrorProps> = (props) => (
 const MemoInputError = memo(InputError);
 
 export { InputGroup, MemoInputError as InputError };
+
+export default memo(Input);

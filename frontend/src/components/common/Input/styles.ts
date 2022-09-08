@@ -11,7 +11,6 @@ export const Input = styled.input`
   background-color: transparent;
   border: none;
   color: ${({ theme }) => theme.colors.dark};
-  font-family: 'GreyCliff CF';
   font-size: 1rem;
   line-height: calc(22 / 16);
   width: 100%;

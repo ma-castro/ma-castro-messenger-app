@@ -1,7 +1,7 @@
 import { InputHTMLAttributes } from 'react';
 import { FieldErrors, FieldName, Message } from 'react-hook-form';
 
-export declare type FieldValuesFromFieldErrors<TFieldErrors> = TFieldErrors extends FieldErrors<
+export type FieldValuesFromFieldErrors<TFieldErrors> = TFieldErrors extends FieldErrors<
   infer TFieldValues
 >
   ? TFieldValues
@@ -26,4 +26,6 @@ export type InputErrorProps = {
   message?: Message;
 };
 
-export type LogicProps = InputHTMLAttributes<HTMLInputElement>;
+export type LogicProps = InputHTMLAttributes<HTMLInputElement> & {
+  ref: React.ForwardedRef<HTMLInputElement>;
+};

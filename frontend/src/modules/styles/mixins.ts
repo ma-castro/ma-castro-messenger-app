@@ -13,5 +13,4 @@ export const CustomTooltip = css`
   border: 0.0625rem solid ${({ theme }) => theme.colors.grey300};
   box-shadow: 0 0.125rem 1rem -0.5rem ${({ theme }) => theme.colors.grey500};
   letter-spacing: 0.0063rem;
-  font-family: 'Greycliff CF';
 `;

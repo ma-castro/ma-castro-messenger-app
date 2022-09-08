@@ -1,24 +1,36 @@
-import { InputGroup } from 'components/common/Input';
-import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Input, { InputError, InputGroup } from 'components/common/Input';
+import { Controller as Field, useForm } from 'react-hook-form';
+import { LoginSchema, TLoginInput } from './schema';
 import { Container, Form } from './styles';
-import { IFormInputs } from './types';
 
 const Login = () => {
   const {
     control,
-    handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
+  } = useForm<TLoginInput>({ resolver: zodResolver(LoginSchema) });
 
   return (
     <Container>
       <Form>
-        <InputGroup>test</InputGroup>
+        <InputGroup>
+          <Field
+            name='email'
+            control={control}
+            defaultValue=''
+            render={({ field }) => <Input {...field} placeholder='Email' />}
+          />
+          <InputError name='email' errors={errors} />
+        </InputGroup>
+        <InputGroup>
+          <Field
+            name='password'
+            control={control}
+            defaultValue=''
+            render={({ field }) => <Input {...field} placeholder='Password' />}
+          />
+          <InputError name='password' errors={errors} />
+        </InputGroup>
       </Form>
     </Container>
   );
